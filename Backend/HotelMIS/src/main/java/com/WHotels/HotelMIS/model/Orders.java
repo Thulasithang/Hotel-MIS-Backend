@@ -20,16 +20,4 @@ public class Orders {
     @ManyToMany
     private List<MenuItem> menuItems;
 
-    // @Override
-    // public boolean equals(Object o) {
-    //     if (this == o) return true;
-    //     if (o == null || getClass() != o.getClass()) return false;
-    //     Orders order = (Orders) o;
-    //     return orderId == order.orderId && Objects.equals(tableId, order.tableId)  && Objects.equals(orderStatus, order.orderStatus);
-    // }
-
-    // @Override
-    // public int hashCode() {
-    //     return Objects.hash(orderId, tableId,  orderStatus);
-    // }
 }
