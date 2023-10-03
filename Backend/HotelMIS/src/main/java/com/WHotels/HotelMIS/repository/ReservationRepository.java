@@ -24,6 +24,9 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             @Param("currentTime") Time currentTime
     );
 
+    @Query("SELECT r FROM Reservation r WHERE r.date >= :date")
+    List<Reservation> findReservationsForTodayAndFuture(@Param("date") Date date);
+
 
 
 }

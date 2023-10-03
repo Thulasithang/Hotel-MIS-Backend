@@ -1,12 +1,12 @@
 package com.WHotels.HotelMIS.controller;
 
 
+import com.WHotels.HotelMIS.model.Reservation;
 import com.WHotels.HotelMIS.service.ReservationService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(path="api/v1/reservation")
@@ -23,4 +23,18 @@ public class ReservationController {
         boolean isReserved = reservationService.isReserved(tableId);
         return ResponseEntity.ok(isReserved);
     }
+
+    @GetMapping("/future")
+    public ResponseEntity<List<Reservation>> getFutureReservation() {
+        List<Reservation> reservations= reservationService.getFutureReservations();
+        return ResponseEntity.ok(reservations);
+    }
+
+    @DeleteMapping("/{reservationId}")
+    public void deleteReservationById(@PathVariable Long reservationId) {
+        System.out.println(reservationId);
+        reservationService.deleteReservationById(reservationId);
+    }
+
+
 }
