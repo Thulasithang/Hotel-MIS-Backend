@@ -11,7 +11,7 @@ import lombok.Data;
 
 @Data
 @Entity
-//@jakarta.persistence.Table(name="menuitem")
+
 public class MenuItem {
 
     @Id
