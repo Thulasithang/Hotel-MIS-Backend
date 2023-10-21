@@ -51,4 +51,33 @@ public class MenuItemService {
         }
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
     }
+
+    public void deleteMenuItemById(Integer menuitemId) {
+        menuItemRepository.deleteById(menuitemId);
+    }
+
+    public ResponseEntity<MenuItem> updateMenuItem(Integer id, MenuItem updatedItem) {
+        MenuItem existingItem = menuItemRepository.findById(id).orElse(null);
+        if (existingItem == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // Update the existing item with the new data
+        existingItem.setName(updatedItem.getName());
+        existingItem.setPrice(updatedItem.getPrice());
+        existingItem.setDiscount(updatedItem.getDiscount());
+        existingItem.setQuantity(updatedItem.getQuantity());
+        existingItem.setFoodType(updatedItem.getFoodType());
+        existingItem.setImageUrl(updatedItem.getImageUrl());
+        existingItem.setDescription(updatedItem.getDescription());
+
+        // Save the updated item
+        MenuItem updatedMenuItem = menuItemRepository.save(existingItem);
+        return ResponseEntity.ok(updatedMenuItem);
+    }
+
+    public ResponseEntity<MenuItem> addMenuItem(MenuItem newItem) {
+        MenuItem createdMenuItem = menuItemRepository.save(newItem);
+        return ResponseEntity.ok(createdMenuItem);
+    }
 }

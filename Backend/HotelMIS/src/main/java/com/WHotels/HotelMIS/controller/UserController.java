@@ -32,6 +32,22 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping()
+    public List<Users> GetUsers(){
+        return userService.getUsers();
+
+    }
+
+    @DeleteMapping("/remove/{userId}")
+    public void deleteUser(@PathVariable Long userId) {
+        userService.deleteUser(userId);
+    }
+
+
+
+
+
+
     @PostMapping("/new")
     public String addNewUser(@RequestBody Users user){
         return userService.addUser(user);

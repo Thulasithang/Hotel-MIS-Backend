@@ -7,10 +7,7 @@ import com.WHotels.HotelMIS.model.Table;
 import com.WHotels.HotelMIS.service.MenuItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
@@ -45,6 +42,24 @@ public class MenuItemController {
     public ResponseEntity <List<MenuItem>> getDiscountMenuItems(){
         return menuItemService.getDiscountMenuItems();
     }
+
+    @DeleteMapping("/delete/{menuitemId}")
+    public void deleteMenuItemId(@PathVariable Integer menuitemId) {
+        System.out.println(menuitemId);
+        menuItemService.deleteMenuItemById(menuitemId);
+    }
+
+    @PatchMapping("/update/{id}")
+    public ResponseEntity<MenuItem> updateMenuItem(@PathVariable Integer id, @RequestBody MenuItem updatedItem) {
+        return menuItemService.updateMenuItem(id, updatedItem);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<MenuItem> addMenuItem(@RequestBody MenuItem newItem) {
+        return menuItemService.addMenuItem(newItem);
+    }
+
+
 
 }
 
