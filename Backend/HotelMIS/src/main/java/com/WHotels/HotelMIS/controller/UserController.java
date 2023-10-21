@@ -8,6 +8,7 @@ import com.WHotels.HotelMIS.service.OrderService;
 import com.WHotels.HotelMIS.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -35,16 +36,27 @@ public class UserController {
     @GetMapping()
     public List<Users> GetUsers(){
         return userService.getUsers();
+    }
+
+    @GetMapping("/staff")
+    public List<Users> GetStaffUsers(){
+        return userService.getStaffUsers();
 
     }
+
+    @GetMapping("/userid")
+    public int getUserIdByUsername(@RequestParam String username) {
+        return userService.getUserIdByUsername(username);
+    }
+//    @GetMapping("/{username}/userid")
+//    public int getUserIdByUsername(@PathVariable String username) {
+//        return userService.getUserIdByUsername(username);
+//    }
 
     @DeleteMapping("/remove/{userId}")
     public void deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
     }
-
-
-
 
 
 
@@ -66,6 +78,8 @@ public class UserController {
 
 
     }
+
+
 
 
 
