@@ -1,17 +1,16 @@
 package com.WHotels.HotelMIS.controller;
 
+import com.WHotels.HotelMIS.model.MenuItem;
 import com.WHotels.HotelMIS.model.Orders;
+import com.WHotels.HotelMIS.service.MenuItemService;
 import com.WHotels.HotelMIS.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -22,14 +21,16 @@ import java.util.stream.Collectors;
 public class OrderController {
 
     private final OrderService orderService;
+    private final MenuItemService menuItemService;
 
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
 
     @Autowired
-    OrderController(OrderService orderService) {
+    OrderController(OrderService orderService, JdbcTemplate jdbcTemplate, MenuItemService menuItemService) {
         this.orderService = orderService;
+        this.menuItemService = menuItemService;
     }
 
     @GetMapping("/placed")
@@ -68,6 +69,57 @@ public class OrderController {
 
         return new ResponseEntity<>("Order prepared", HttpStatus.OK);
     }
+
+    @GetMapping("quantity/{orderId}/{menuItemId}")
+    public ResponseEntity<Integer> findQuantityByOrderIdAndMenuItemId(
+            @PathVariable Long orderId,
+            @PathVariable Long menuItemId) {
+
+        Integer quantity = orderService.getOrderRepository().findQuantityByOrderIdAndMenuItemId(orderId, menuItemId);
+
+        if (quantity != null) {
+            return ResponseEntity.ok(quantity);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/{orderId}")
+    public ResponseEntity<List<MenuItem>> findMenuItemsByOrderId(@PathVariable Long orderId) {
+        System.out.println("working 1");
+        List<MenuItem> menuItems = menuItemService.getMenuItemRepository().findMenuItemsByOrderId(orderId);
+
+        if (!menuItems.isEmpty()) {
+            return ResponseEntity.ok(menuItems);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PatchMapping("/{orderId}/markDelivered")
+    public Orders markOrderAsDelivered(@PathVariable int orderId) {
+        System.out.println(orderId);
+        return orderService.updateOrderStatusToDelivered(orderId);
+    }
+
+    @PatchMapping("/{orderId}/markPrepared")
+    public Orders markOrderAsPrepared(@PathVariable int orderId) {
+        System.out.println(orderId);
+        return orderService.updateOrderStatusToPrepared(orderId);
+    }
+
+    @PatchMapping("/{orderId}/markPreparing")
+    public Orders markOrderAsPreparing(@PathVariable int orderId) {
+        System.out.println(orderId);
+        return orderService.updateOrderStatusToPreparing(orderId);
+    }
+
+
+
+
+
+
+
 
 
 }

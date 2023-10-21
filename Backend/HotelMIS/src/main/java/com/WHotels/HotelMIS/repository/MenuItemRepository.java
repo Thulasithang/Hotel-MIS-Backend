@@ -5,6 +5,7 @@ import com.WHotels.HotelMIS.model.MenuItem;
 import com.WHotels.HotelMIS.model.Table;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,5 +24,9 @@ public interface MenuItemRepository extends JpaRepository<MenuItem, Integer> {
 
     @Query("SELECT m FROM MenuItem m WHERE m.discount > 0")
     List<MenuItem> findDiscountMenuItems();
+
+    @Query(value = "SELECT * FROM menuitem WHERE menuitem_id IN (SELECT menu_item_id FROM order_menu_item WHERE order_id = :orderId)",
+            nativeQuery = true)
+    List<MenuItem> findMenuItemsByOrderId(@Param("orderId") Long orderId);
     
 }
