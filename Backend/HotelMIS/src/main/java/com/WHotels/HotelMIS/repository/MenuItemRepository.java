@@ -12,15 +12,25 @@ import java.util.List;
 @Repository
 public interface MenuItemRepository extends JpaRepository<MenuItem, Integer> {
 
+    /**
+     * This function retrieves a list of menu items from the database based on the specified food type.
+     */
     @Query(value = "SELECT * FROM menu_item m WHERE m.food_type = :type", nativeQuery = true)
     List<MenuItem> findByType(String type);
 
     @Query("SELECT m FROM MenuItem m WHERE m.quantity > 0")
     List<MenuItem> findInStockMenuItems();
 
+
+    /**
+     * This function retrieves menu items from the database based on a list of item IDs.
+     */
     @Query(value = "SELECT * FROM menu_item WHERE menuitem_id IN (:itemIds)", nativeQuery = true)
     List<MenuItem> getMenuItemsById(List<Integer> itemIds);
 
+    /**
+     * This function retrieves a list of discounted menu items from the database.
+     */
     @Query("SELECT m FROM MenuItem m WHERE m.discount > 0")
     List<MenuItem> findDiscountMenuItems();
     
