@@ -17,6 +17,10 @@ public class MenuItemService {
     @Autowired
     MenuItemRepository menuItemRepository;
 
+    public MenuItemRepository getMenuItemRepository() {
+        return menuItemRepository;
+    }
+
     public List<MenuItem> getInStockMenuItems() {
         return menuItemRepository.findInStockMenuItems();
     }
