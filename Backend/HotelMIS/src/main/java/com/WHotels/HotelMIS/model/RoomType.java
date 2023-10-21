@@ -20,6 +20,7 @@ public class RoomType {
     @Column(nullable = false)
     private String type;
 
+
     @Column(name = "max_adult_occupancy", nullable = false)
     private Integer maxAdultOccupancy;
 

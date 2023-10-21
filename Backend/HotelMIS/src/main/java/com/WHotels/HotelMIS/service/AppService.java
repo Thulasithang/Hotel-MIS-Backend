@@ -5,6 +5,7 @@ import com.WHotels.HotelMIS.dto.resort.AppHomeResponse;
 import com.WHotels.HotelMIS.dto.SearchByFiltersResponse;
 import com.WHotels.HotelMIS.model.Booking;
 import com.WHotels.HotelMIS.model.Room;
+import com.WHotels.HotelMIS.model.RoomType;
 import com.WHotels.HotelMIS.repository.BookingRepository;
 import com.WHotels.HotelMIS.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,9 +67,9 @@ public class AppService {
         }
     }
 
-    public List<Room> getRooms(Long roomId) throws Exception{
+    public List<Room> getRooms(Long roomId, String roomStatus) throws Exception{
         try{
-            List<Room> roomList = roomRepository.getRoomById(roomId);
+            List<Room> roomList = roomRepository.getRoomById(roomId, roomStatus);
             return roomList;
         }
         catch (Exception ex){

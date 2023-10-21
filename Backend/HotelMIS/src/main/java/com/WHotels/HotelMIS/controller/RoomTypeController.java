@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("roomType")
+@RequestMapping("api/v1/roomType")
 @CrossOrigin
 public class RoomTypeController {
 
@@ -25,9 +25,6 @@ public class RoomTypeController {
 
 
 
-    @PostMapping("add")
-    public ResponseEntity<String> addRoomType(@RequestBody RoomType roomType) throws IOException {
-        return roomTypeService.addRoomType(roomType);
-    }
+
 
 }
