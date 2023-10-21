@@ -12,7 +12,7 @@ import com.WHotels.HotelMIS.model.Table;
 import java.util.List;
 
 @RestController
-@RequestMapping(path="api/v1/table")    // important
+@RequestMapping(path="api/v1/table")
 class TableController {
     private final TableService tableService;
     private final ReservationService reservationService;
@@ -40,8 +40,8 @@ class TableController {
             @PathVariable Long tableId,
             @RequestParam(value = "waiterRequested", required = false) Boolean waiterRequested,
             @RequestParam(value = "occupied", required = false) Boolean occupied) {
-        System.out.println("Table id fron the front"+tableId.toString());
-        System.out.println("Table id fron the front"+waiterRequested.toString());
+        //System.out.println("Table id fron the front"+tableId.toString());
+        //System.out.println("Table id fron the front"+waiterRequested.toString());
         try {
             tableService.updateTableStatus(tableId, waiterRequested, occupied);
             return ResponseEntity.ok("Table status updated successfully: "+tableId.toString());
