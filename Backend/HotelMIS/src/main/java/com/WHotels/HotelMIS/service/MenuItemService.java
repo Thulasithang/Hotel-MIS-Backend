@@ -25,6 +25,12 @@ public class MenuItemService {
         return menuItemRepository.findInStockMenuItems();
     }
 
+    /**
+     * The function retrieves all menu items from the repository and returns them in a ResponseEntity
+     * object with an HTTP status code.
+     * 
+     * @return The method is returning a ResponseEntity object containing a List of MenuItem objects.
+     */
     public ResponseEntity<List<MenuItem>> getAllMenuItems() {
         try {
             List<MenuItem> menuItems = menuItemRepository.findAll();
@@ -45,6 +51,12 @@ public class MenuItemService {
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * The function retrieves a list of discounted menu items from a repository and returns it as a
+     * ResponseEntity.
+     * 
+     * @return The method is returning a ResponseEntity object containing a List of MenuItem objects.
+     */
     public ResponseEntity<List<MenuItem>> getDiscountMenuItems() {
         try {
             List<MenuItem> menuItems = menuItemRepository.findDiscountMenuItems();

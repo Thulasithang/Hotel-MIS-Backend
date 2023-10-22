@@ -19,16 +19,24 @@ public class MenuItemController {
     @Autowired
     private  MenuItemService menuItemService;
 
-    // @GetMapping("/getitems")
-    // public List<MenuItem> getMenuItems(){
-    //     return menuItemService.getMenuItems();
-    // }
-
+    /**
+     * The function returns a list of all menu items as a ResponseEntity.
+     * 
+     * @return The method is returning a ResponseEntity object that contains a list of MenuItem
+     * objects.
+     */
     @GetMapping("/getAllItems")
      public ResponseEntity<List<MenuItem>> getAllMenuItems() {
         return menuItemService.getAllMenuItems();
     }
 
+    /**
+     * The function `getMenuItemsByType` returns a list of menu items based on the specified type.
+     * 
+     * @param type The "type" parameter is a String that represents the type of menu items to retrieve.
+     * @return The method is returning a ResponseEntity object that contains a list of MenuItem
+     * objects.
+     */
     @GetMapping("getItemsByType/{type}")
     public ResponseEntity<List<MenuItem>> getMenuItemsByType(@PathVariable String type) {
         return menuItemService.getMenuItemsByType(type);
@@ -38,6 +46,12 @@ public class MenuItemController {
         return menuItemService.getInStockMenuItems();
     }
 
+    /**
+     * The function "getDiscountMenuItems" returns a list of discounted menu items.
+     * 
+     * @return The method is returning a ResponseEntity object that contains a list of MenuItem
+     * objects.
+     */
     @GetMapping("/getDiscountItems")
     public ResponseEntity <List<MenuItem>> getDiscountMenuItems(){
         return menuItemService.getDiscountMenuItems();
