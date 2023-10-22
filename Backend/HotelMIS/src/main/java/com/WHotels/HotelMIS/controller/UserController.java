@@ -68,14 +68,14 @@ public class UserController {
 
     @PostMapping("/authenticate")
     public String authenticateAndGenerateToken(@RequestBody AuthRequest authRequest){
+        boolean validUserRole = userService.getUserRoleByUsername(authRequest.getUsername()).equals(authRequest.getUserRole());
 
        Authentication authentication =authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(),authRequest.getPassword()));
-       if(authentication.isAuthenticated()){
+       if(authentication.isAuthenticated() && validUserRole){
            return jwtService.generateToken(authRequest.getUsername());
        }else{
            throw new UsernameNotFoundException("invalid username and password !");
        }
-
 
     }
 

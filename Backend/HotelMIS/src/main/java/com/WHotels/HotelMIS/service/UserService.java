@@ -49,5 +49,14 @@ public class UserService {
         return userRepository.findByUserRole("ROLE_HOTELSTAFF");
     }
 
+    public String getUserRoleByUsername(String username) {
+        Optional<Users> user = userRepository.findByUsername(username);
+        if (user != null) {
+            return user.get().getUserRole();
+        }
+        // Return an appropriate value or throw an exception if the user is not found.
+        return ""; // For example, return -1 if the user is not found.
+    }
+
 
 }
