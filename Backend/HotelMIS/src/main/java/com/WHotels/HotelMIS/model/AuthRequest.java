@@ -6,9 +6,12 @@ public class AuthRequest {
     private String username;
     private String password;
 
-    public AuthRequest(String username, String password) {
+    private String userRole;
+
+    public AuthRequest(String username, String password, String userRole) {
         this.username = username;
         this.password = password;
+        this.userRole = userRole;
     }
 
     public AuthRequest() {
@@ -24,6 +27,13 @@ public class AuthRequest {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getUserRole() {
+        return userRole;
+    }
+    public String setUserRole(String userRole) {
+        return this.userRole = userRole;
     }
 
     public void setPassword(String password) {
