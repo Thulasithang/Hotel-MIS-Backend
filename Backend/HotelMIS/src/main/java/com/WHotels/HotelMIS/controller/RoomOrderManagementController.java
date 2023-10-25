@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/room/booking")
+@RequestMapping("api/v1/room/booking")
 @CrossOrigin
 public class RoomOrderManagementController {
 

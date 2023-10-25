@@ -17,6 +17,9 @@ import java.util.Optional;
 @Service
 public class BookingManagementService {
     @Autowired
+    private EmailSenderService emailSenderService;
+
+    @Autowired
     CustomerRepository customerRepository;
 
     @Autowired
@@ -73,6 +76,20 @@ public class BookingManagementService {
                 booking.setCustomer(customerOptional.get());
                 booking.setBookingStatus("Confirmed");
                 bookingRepository.save(booking);
+            }
+
+            String toEmail = "rasula.20@cse.mrt.ac.lk";
+            String subject = "Booking Confirmation";
+            String body = "Your booking has been confirmed.";
+            try {
+                System.out.println("Sending Email..." + toEmail);
+                emailSenderService.sendSimpleEmail(toEmail, subject, body);
+                // Email sent successfully
+                // Add any additional logic you want to execute after successful email sending.
+            } catch (Exception e) {
+                // Handle the exception here
+                System.err.println("Email sending failed: " + e.getMessage());
+                // You can log the exception and take appropriate action, such as notifying administrators or retrying the operation.
             }
             return ConfirmedResponse.builder().customerId(customerOptional.get().getCustomerId()).build();
         }catch (Exception ex){

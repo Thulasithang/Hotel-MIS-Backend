@@ -56,12 +56,13 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
 
     @Query(nativeQuery = true, value =
             "select\n" +
-            "\t*\n" +
-            "from\n" +
-            "\troom r\n" +
-            "where\n" +
-            "\t(:roomId IS NULL OR r.room_id = :roomId)")
-    List<Room> getRoomById(Long roomId);
+                    "\t*\n" +
+                    "from\n" +
+                    "\troom r\n" +
+                    "where\n" +
+                    "\t(:roomId IS NULL OR r.room_id = :roomId)\n" +
+                    "AND" + "(:roomStatus IS NULL OR r.room_status = :roomStatus)")
+    List<Room> getRoomById(Long roomId, String roomStatus);
 
 
     @Modifying

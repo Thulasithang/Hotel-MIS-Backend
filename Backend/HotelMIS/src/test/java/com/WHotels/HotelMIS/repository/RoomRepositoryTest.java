@@ -186,7 +186,7 @@ class RoomRepositoryTest {
 
 
         // Act: Call the getRoomById method
-        List<Room> foundRooms = underTest.getRoomById(room.getRoomId());
+        List<Room> foundRooms = underTest.getRoomById(room.getRoomId(), room.getRoomStatus());
 
         // Assert: Check that the result contains the expected room
         assertNotNull(foundRooms);

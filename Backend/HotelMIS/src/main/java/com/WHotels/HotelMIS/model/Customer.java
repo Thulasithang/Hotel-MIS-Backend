@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.Email;
+
 @Entity
 @Getter
 @Setter
@@ -20,6 +22,8 @@ public class Customer {
     private String lastName;
     private String dateOfBirth;
     private String phoneNo;
+
+    @Email(message = "Please provide a valid email address")
     private String email;
 
 }
