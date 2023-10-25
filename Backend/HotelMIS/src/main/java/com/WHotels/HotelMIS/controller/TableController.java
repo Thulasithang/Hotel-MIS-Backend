@@ -23,7 +23,7 @@ class TableController {
         this.reservationService=reservationService;
     }
 
-    @GetMapping
+    @GetMapping("/getAllTables")
     public List<Table> getTables(){
         List<Table> tables = tableService.getTables();
         // Iterate through the tables and set the reserved property

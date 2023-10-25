@@ -2,6 +2,8 @@ package com.WHotels.HotelMIS.controller;
 
 
 import com.WHotels.HotelMIS.dto.SearchByFiltersResponse;
+
+import com.WHotels.HotelMIS.dto.resort.AppHomeResponse;
 import com.WHotels.HotelMIS.model.Room;
 import com.WHotels.HotelMIS.model.RoomType;
 import com.WHotels.HotelMIS.service.AppService;
@@ -26,8 +28,8 @@ public class AppController {
     AppService appService;
 
     @GetMapping("/home")
-    ResponseEntity<com.WHotels.HotelMIS.dto.resort.AppHomeResponse> getHomeScreen() throws Exception{
-        com.WHotels.HotelMIS.dto.resort.AppHomeResponse response = appService.getHomeScreen();
+    ResponseEntity<AppHomeResponse> getHomeScreen() throws Exception{
+        AppHomeResponse response = appService.getHomeScreen();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

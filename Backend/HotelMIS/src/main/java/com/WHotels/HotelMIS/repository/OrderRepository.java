@@ -29,5 +29,9 @@ public interface OrderRepository extends JpaRepository<Orders,Integer> {
 
     @Query(value = "SELECT * FROM menu_item WHERE menuitem_id IN (:itemIds)", nativeQuery = true)
     List<MenuItem> getMenuItemsById(@Param("itemIds") List<Integer> itemIds);
-    
+
+    @Query(value = "SELECT quantity FROM order_menu_item WHERE order_id = :orderId AND menu_item_id = :menuItemId", nativeQuery = true)
+    Integer findQuantityByOrderIdAndMenuItemId(@Param("orderId") Long orderId, @Param("menuItemId") Long menuItemId);
+
+
 }

@@ -27,12 +27,15 @@ public class Task {
     @Basic
     @Column(name = "end_time")
     private Time endTime;
+    @Basic
+    @Column(name = "staff_id")
+    private Long staffId;
 
     public long getTaskId() {
         return taskId;
     }
 
-    public void setTaskId(int taskId) {
+    public void setTaskId(long taskId) {
         this.taskId = taskId;
     }
 
@@ -76,16 +79,24 @@ public class Task {
         this.endTime = endTime;
     }
 
+    public Long getStaffId() {
+        return staffId;
+    }
+
+    public void setStaffId(Long staffId) {
+        this.staffId = staffId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return taskId == task.taskId && Objects.equals(status, task.status) && Objects.equals(description, task.description) && Objects.equals(date, task.date) && Objects.equals(startTime, task.startTime) && Objects.equals(endTime, task.endTime);
+        return taskId == task.taskId && Objects.equals(status, task.status) && Objects.equals(description, task.description) && Objects.equals(date, task.date) && Objects.equals(startTime, task.startTime) && Objects.equals(endTime, task.endTime) && Objects.equals(staffId, task.staffId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(taskId, status, description, date, startTime, endTime);
+        return Objects.hash(taskId, status, description, date, startTime, endTime, staffId);
     }
 }
