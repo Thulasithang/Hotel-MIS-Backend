@@ -1,7 +1,6 @@
 package com.WHotels.HotelMIS.model;
 
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -13,12 +12,11 @@ import lombok.Setter;
 @Setter
 @Data
 @Entity
-@jakarta.persistence.Table(name="order_menu_item")
 public class OrderMenuItem {
-    
-    @EmbeddedId
-    private OrderMenuItemId id; // Use the composite key class
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer orderId;
+    private Integer menuItemId;
     private Integer quantity;
 
 }

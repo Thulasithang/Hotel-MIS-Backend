@@ -1,7 +1,7 @@
 package com.WHotels.HotelMIS.service;
 
 
-import com.WHotels.HotelMIS.dto.AppHomeResponse;
+import com.WHotels.HotelMIS.dto.resort.AppHomeResponse;
 import com.WHotels.HotelMIS.dto.SearchByFiltersResponse;
 import com.WHotels.HotelMIS.model.Booking;
 import com.WHotels.HotelMIS.model.Room;
