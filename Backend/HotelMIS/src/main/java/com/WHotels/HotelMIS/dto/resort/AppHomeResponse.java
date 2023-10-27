@@ -1,4 +1,4 @@
-package com.WHotels.HotelMIS.dto.resort;
+package com.WHotels.HotelMIS.dto;
 
 
 import lombok.Getter;
