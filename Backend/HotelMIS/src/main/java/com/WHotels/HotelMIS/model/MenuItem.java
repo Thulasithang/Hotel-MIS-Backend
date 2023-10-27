@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@jakarta.persistence.Table(name="menuitem")
+@jakarta.persistence.Table(name="menu_item")
 public class MenuItem {
 
     @Id

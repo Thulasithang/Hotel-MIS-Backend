@@ -6,6 +6,8 @@ import com.WHotels.HotelMIS.model.Orders;
 import com.WHotels.HotelMIS.repository.MenuItemRepository;
 import com.WHotels.HotelMIS.repository.OrderRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,18 +38,28 @@ public class OrderService {
         return orderRepository.getPreparedOrders();
     }
 
-    public ResponseEntity<String> createOrder(List<Integer> itemIds, String customerName, Integer tableId, String customerNumber) {
-        List<MenuItem> menuItemsOrdered = MenuItemRepository.getMenuItemsById(itemIds);
-        Orders order = new Orders();
-        order.setTableId(tableId);
-        order.setMenuItems(menuItemsOrdered);
-        order.setOrderStatus("ordered");
-        order.setCustomerName(customerName);
-        order.setCustomerNumber(customerNumber);
-        orderRepository.save(order);
-        System.out.println("This is the Order service file. Received itemIds: " + itemIds + " for tableId: " + tableId + " customerName: " + customerName + " customerNumber: " + customerNumber);
-        return new ResponseEntity<>("Order created successfully", HttpStatus.CREATED);
-    }
+    // public ResponseEntity<String> createOrder(List<Integer> itemIds, String customerName, Integer tableId, String customerNumber) {
+    //     List<MenuItem> menuItemsOrdered = MenuItemRepository.getMenuItemsById(itemIds);
+    //     Orders order = new Orders();
+    //     order.setTableId(tableId);
+    //     order.setMenuItems(menuItemsOrdered);
+    //     order.setOrderStatus("ordered");
+    //     order.setCustomerName(customerName);
+    //     order.setCustomerNumber(customerNumber);
+    //     orderRepository.save(order);
+    //     System.out.println("This is the Order service file. Received itemIds: " + itemIds + " for tableId: " + tableId + " customerName: " + customerName + " customerNumber: " + customerNumber);
+    //     return new ResponseEntity<>("Order created successfully", HttpStatus.CREATED);
+    // }
+
+        @Transactional
+        public Orders createOrder(Orders newOrder) {
+            // You can add any business logic here before saving the order
+            // For example, validation or additional processing
+
+            // Save the order to the database
+            System.out.println("This is the Order service file."+ "Order status: "+ newOrder.getOrderStatus()+ " for tableId: " + newOrder.getTableId() + " customerName: " + newOrder.getCustomerName() + " customerNumber: " + newOrder.getCustomerNumber());
+            return orderRepository.save(newOrder);
+        }
 
     public ResponseEntity<String> getOrderStatus(Integer orderId) {
         Optional<Orders> order = orderRepository.findById(orderId);
