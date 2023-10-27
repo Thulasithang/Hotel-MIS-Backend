@@ -1,8 +1,11 @@
 package com.WHotels.HotelMIS.controller;
 
 import com.WHotels.HotelMIS.model.MenuItem;
+import com.WHotels.HotelMIS.model.OrderMenuItem;
+import com.WHotels.HotelMIS.model.OrderMenuItemId;
 import com.WHotels.HotelMIS.model.Orders;
 import com.WHotels.HotelMIS.service.MenuItemService;
+import com.WHotels.HotelMIS.service.OrderMenuItemService;
 import com.WHotels.HotelMIS.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -26,6 +29,9 @@ public class OrderController {
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
+    @Autowired
+    private OrderMenuItemService orderMenuItemService;
+
 
     @Autowired
     OrderController(OrderService orderService, JdbcTemplate jdbcTemplate, MenuItemService menuItemService) {
@@ -45,16 +51,53 @@ public class OrderController {
 
     @PostMapping("/create")
     public ResponseEntity<String> createOrder(@RequestBody Map<String, Object> requestData) {
-            List<Map<String, Object>> items = (List<Map<String, Object>>) requestData.get("items"); 
-            Integer tableId = (Integer) requestData.get("tableId"); 
-            String customerName = (String) requestData.get("customerName");
-            String customerNumber = (String) requestData.get("customerNumber");
-            List<Integer> itemIds = items.stream()
-            .map(item -> (Integer) item.get("id"))
-            .collect(Collectors.toList());
+            // List<Map<String, Object>> items = (List<Map<String, Object>>) requestData.get("items"); 
+            // Integer tableId = (Integer) requestData.get("tableId"); 
+            // String customerName = (String) requestData.get("customerName");
+            // String customerNumber = (String) requestData.get("customerNumber");
+            // List<Integer> itemIds = items.stream()
+            // .map(item -> (Integer) item.get("id"))
+            // .collect(Collectors.toList());
 
-            System.out.println("Received itemIds: " + itemIds + " for tableId: "  + " customerName: " + customerName + " customerNumber: " + customerNumber);
-            return orderService.createOrder(itemIds,  customerName, tableId, customerNumber);  
+            // System.out.println("Received itemIds: " + itemIds + " for tableId: "  + " customerName: " + customerName + " customerNumber: " + customerNumber);
+            // return orderService.createOrder(itemIds,  customerName, tableId, customerNumber);  
+
+
+            Integer tableId = (Integer) requestData.get("tableId");
+    String customerName = (String) requestData.get("customerName");
+    String customerNumber = (String) requestData.get("customerNumber");
+
+    Orders newOrder = new Orders();
+    newOrder.setTableId(tableId);
+    newOrder.setCustomerName(customerName);
+    newOrder.setCustomerNumber(customerNumber);
+    newOrder.setOrderStatus("placed");
+
+    // System.out.println("Order: " + newOrder.getCustomerName());
+    Orders createdOrder = orderService.createOrder(newOrder);
+
+    Integer orderId = createdOrder.getOrderId();
+
+    System.out.println("Order ID: " + orderId);
+
+    List <Map<String, Object>> items = (List<Map<String, Object>>) requestData.get("items");
+    for (Map<String, Object> itemData : items) {
+        Integer itemId = (Integer) itemData.get("id");
+        Integer quantity = (Integer) itemData.get("quantity");
+
+        OrderMenuItem orderMenuItem = new OrderMenuItem();
+        OrderMenuItemId orderMenuItemId = new OrderMenuItemId();        
+        
+        orderMenuItemId.setOrderId(orderId);
+        orderMenuItemId.setMenuItemId(itemId);
+    
+        orderMenuItem.setId(orderMenuItemId); // Set the composite key
+        orderMenuItem.setQuantity(quantity);
+
+        orderMenuItemService.saveOrderMenuItem(orderMenuItem);
+    }
+    return null; //ResponseEntity.ok("Order created successfully. Order ID: " + orderId);
+
     }
 
     // @GetMapping("/status/{orderId}")
