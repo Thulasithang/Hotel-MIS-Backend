@@ -83,7 +83,7 @@ public class OrderController {
     List <Map<String, Object>> items = (List<Map<String, Object>>) requestData.get("items");
     for (Map<String, Object> itemData : items) {
         Integer itemId = (Integer) itemData.get("id");
-        Integer quantity = (Integer) itemData.get("quantity");
+        Integer quantity = (Integer) itemData.get("count");
 
         OrderMenuItem orderMenuItem = new OrderMenuItem();
         OrderMenuItemId orderMenuItemId = new OrderMenuItemId();        
